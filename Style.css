@@ -1,0 +1,23 @@
+ /* Estilo para la card */
+ .card {
+    background-color: #757272;
+    border: 2px solid rgb(116, 186, 215);
+    color: #fff;
+}
+
+/* Estilo para el título de la card */
+.card-title {
+    color: #fff;
+}
+
+/* Estilo para el botón "Ver" */
+.btn-primary {
+    background-color: rgb(103, 103, 103);
+    border-color: rgb(255, 255, 255);
+}
+
+/* Estilo para el botón "Ver" al hacer hover */
+.btn-primary:hover {
+    background-color: rgb(116, 186, 215);
+    border-color:rgb(116, 186, 215);
+}

@@ -6,13 +6,14 @@ if ($_POST) {
 
     $Nombre = $_POST['Nombre'];
     $Apellido = $_POST['Apellido'];
-    $Pais = $_POST['Pais'];
+    $Pais = $_POST['pais'];
+    $departamento = $_POST['departamento'];
     $Telefono = $_POST['Telefono'];
     $Correo = $_POST['Correo'];
 
     $objconexion =  new conexion();
 
-    $sql = "INSERT INTO `registro usuario`(`id`, `Nombre`, `Apellido`, `Pais`, `Telefono`, `Correo`) VALUES (Null,'$Nombre','$Apellido','$Pais','$Telefono','$Correo');";
+    $sql = "INSERT INTO `registro usuario`(`id`, `Nombre`, `Apellido`, `Pais`, `Departamento`,`Telefono`, `Correo`) VALUES (Null,'$Nombre','$Apellido','$Pais','$departamento','$Telefono','$Correo');";
 
     $objconexion->ejecutar($sql);
 }
@@ -71,7 +72,15 @@ if ($_GET) {
                                         <br>
                                         Ingresa Tu Pais:
                                         <br>
-                                        <input type="text" class="form-control" placeholder="Colombia" name="Pais" id="Pais" value="">
+                                        <label for="pais">País:</label>
+                                        <input type="text" class="form-control" placeholder="Colombia" name="pais" id="pais" value="" oninput="actualizarDepartamentos()" required>
+                                        <br>
+                                        Ingresa Tu Departamento:
+                                        <br>
+                                        <label for="departamento">Departamento:</label>
+                                        <select id="departamento" name="departamento" class="form-control">
+                                            <!-- Aquí se llenarán los departamentos automáticamente -->
+                                        </select>   
                                         <br>
                                         Ingresa Tu Telefono:
                                         <br>
@@ -126,6 +135,7 @@ if ($_GET) {
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Apellido</th>
                                 <th scope="col">Pais</th>
+                                <th scope="col">Departamento</th>
                                 <th scope="col">Telefono</th>
                                 <th scope="col">Correo</th>
                                 <th scope="col">Acciones</th>
@@ -139,10 +149,11 @@ if ($_GET) {
                                     <td><?php echo $registro_persona['Nombre'] ?></td>
                                     <td><?php echo $registro_persona['Apellido'] ?></td>
                                     <td><?php echo $registro_persona['Pais'] ?></td>
+                                    <td><?php echo $registro_persona['Departamento'] ?></td>
                                     <td><?php echo $registro_persona['Telefono'] ?></td>
                                     <td><?php echo $registro_persona['Correo'] ?></td>
                                     <td><a href="?borrar=<?php echo $registro_persona['id']; ?>" class="btn btn-danger">Borrar</a></td>
-                                     <td><a href="editar_Persona.php?id=<?php echo $registro_persona['id']; ?>" class="btn btn-warning">Editar</a></td>
+                                    <td><a href="editar_Persona.php?id=<?php echo $registro_persona['id']; ?>" class="btn btn-warning">Editar</a></td>
                                 </tr>
                             <?php } ?>
                         </tbody>
@@ -159,5 +170,5 @@ if ($_GET) {
 
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-
+<script src="Animacion.js"></script>
 </html>

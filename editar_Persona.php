@@ -10,11 +10,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nuevo_Pais = $_POST['nuevo_Pais'];
     $nuevo_Telefono = $_POST['nuevo_Telefono'];
     $nuevo_Correo = $_POST['nuevo_Correo'];
+    $nuevo_Departamento = $_POST['nuevo_Departamento'];
 
     // Validar y actualizar el registro en la base de datos
-    if (!empty($id) && !empty($nuevo_nombre) && !empty($nuevo_Apellido) && !empty($nuevo_Pais) && !empty($nuevo_Telefono)  && !empty($nuevo_Correo)) {
+    if (!empty($id) && !empty($nuevo_nombre) && !empty($nuevo_Apellido) && !empty($nuevo_Pais) && !empty($nuevo_Telefono)  && !empty($nuevo_Correo) && !empty($nuevo_Departamento)) {
         $objconexion = new conexion();
-        $sql = "UPDATE `registro usuario` SET `Nombre` = '$nuevo_nombre', `Apellido` = '$nuevo_Apellido', `Pais` = '$nuevo_Pais', `Telefono`='$nuevo_Telefono',`Correo`='$nuevo_Correo'  WHERE `id` = $id";
+        $sql = "UPDATE `registro usuario` SET `Nombre` = '$nuevo_nombre', `Apellido` = '$nuevo_Apellido', `Pais` = '$nuevo_Pais', `Telefono`='$nuevo_Telefono',`Correo`='$nuevo_Correo',`Departamento`='$nuevo_Departamento'  WHERE `id` = $id";
         $objconexion->ejecutar($sql);
 
         // Redireccionar a la página principal o a donde desees después de actualizar los datos del producto
@@ -78,7 +79,7 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                                         </div>
                                         <div class="mb-3">
                                             <label for="nuevo_Pais" class="form-label">Modificar Pais</label>
-                                            <input type="text" name="nuevo_Pais" id="nuevo_Pais" class="form-control" value="<?php echo $producto['Pais']; ?>" required>
+                                            <input type="text" name="nuevo_Pais" id="nuevo_Pais" class="form-control" value="<?php echo $producto['Pais']; ?>" oninput="actualizarDepartamentos()" required>
                                         </div>
                                         <div class="mb-3">
                                             <label for="nuevo_Telefono" class="form-label">Modificar Telefono</label>
@@ -88,6 +89,11 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                                             <label for="nuevo_Correo" class="form-label">Modificar Correo</label>
                                             <input type="text" name="nuevo_Correo" id="nuevo_Correo" class="form-control" value="<?php echo $producto['Correo']; ?>" required>
                                         </div>
+                                        <label for="nuevo_Departamento">Departamento:</label>
+                                        <select id="nuevo_Departamento" name="nuevo_Departamento" class="form-control"value="<?php echo $producto['Departamento']; ?>" required>
+                                            <!-- Aquí se llenarán los departamentos automáticamente -->
+                                        </select>
+                                        <br>
                                         <button type="submit" class="btn btn-primary">Guardar Cambios</button>
                                     </form>
                                 </div>
@@ -122,5 +128,6 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                 }
             </style>
 </body>
+<script src="Animacion.js"></script>
 
 </html>

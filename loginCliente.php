@@ -1,36 +1,14 @@
-
-<?php
-// Inicia la sesión. Permite usar variables de sesión para mantener información entre páginas.
-session_start();
-
-// Comprueba si se ha enviado un formulario usando el método POST.
-if ($_POST) {
-
-    // Comprueba si los valores enviados coinciden con los valores esperados para el correo y el nombre.
-    if ($_POST['Correo'] == "Jarimices@gmail.com" && $_POST['Nombre'] == "Jarison") {
-
-        // Si las condiciones son verdaderas, establece una variable de sesión llamada 'Correo' con el valor "Jarimices@gmail.com".
-        $_SESSION['Correo'] = "Jarimices@gmail.com";
-
-        // Redirige al usuario a la página 'index.php' después de establecer la variable de sesión.
-        header("location: index.php");
-    } else {
-        // Si los valores enviados no coinciden con los esperados, muestra una alerta en el navegador con el mensaje "Usuario Datos incorrectos".
-        echo "<script>alert('Usuario Datos incorrectos');</script>";
-    }
-}
-
-?>
 <!-- Seccion De Cliente-->
 <?php 
+session_start();
 
 if($_POST){
     if($_POST['Telefono']=="321567890" && $_POST ['Departamento']=="Bogotá D.C."){
-        // Si las condiciones son verdaderas, establece una variable de sesión llamada 'Correo' con el valor "Jarimices@gmail.com".
+        // Si las condiciones son verdaderas, establece una variable de sesión llamada 'Correo' con el valor "321567890".
         $_SESSION['Telefono'] = "321567890";
 
         // Redirige al usuario a la página 'index.php' después de establecer la variable de sesión.
-        header("location: index.php");
+        header("location: indexCliente.php");
     }else {
         // Si los valores enviados no coinciden con los esperados, muestra una alerta en el navegador con el mensaje "Usuario Datos incorrectos".
         echo "<script>alert('Usuario Datos incorrectos');</script>";
@@ -40,6 +18,7 @@ if($_POST){
 
 
 ?>
+
 
 
 <!DOCTYPE html>
@@ -66,22 +45,18 @@ if($_POST){
                                     Login
                                 </div>
                                 <div class="card-body">
-                                    <form action="login.php" method="post">
+                                    <form action="loginCliente.php" method="post">
                                         <br>
-                                        Ingresa el correo:
+                                        Ingresa el Telefono:
                                         <br>
-                                        <input type="text" class="form-control" placeholder="Jarimices@gmail.com" name="Correo">
+                                        <input type="text" class="form-control" placeholder="Telefono" name="Telefono">
                                         <br>
-                                        Ingresa tu Nombre:
+                                        Ingresa tu Departamento:
                                         <br>
-                                        <input type="text" class="form-control" placeholder="Jarison" name="Nombre">
+                                        <input type="text" class="form-control" placeholder="Departamento" name="Departamento">
                                         <br>
                                         <input type="submit" value="Entrar" class="btn btn-success">
 
-                                    </form>
-                                    <form action="./Registrar.php">
-                                        <br>
-                                        <input type="submit" value="Registrarse" class="btn btn-warning">
                                     </form>
 
                                 </div>
@@ -100,7 +75,7 @@ if($_POST){
 <style>
         body {
             /* Establece el GIF como fondo de pantalla */
-            background-image: url("./Fotoicon/12953630_Data_security_27.jpg");
+            background-image: url("./Fotoicon/12085707_20944201.jpg");
             /* Fija el fondo para que no se desplace con el contenido */
             background-attachment: fixed;
             /* Ajusta el tamaño del fondo para cubrir todo el viewport */

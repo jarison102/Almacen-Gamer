@@ -6,8 +6,8 @@ if ($_POST) {
 
     $Nombre = $_POST['Nombre'];
     $Apellido = $_POST['Apellido'];
-    $Pais = $_POST['pais'];
-    $departamento = $_POST['departamento'];
+    $Pais = $_POST['Pais'];
+    $departamento = $_POST['Departamento'];
     $Telefono = $_POST['Telefono'];
     $Correo = $_POST['Correo'];
 
@@ -29,8 +29,55 @@ if ($_GET) {
     $objconexion->ejecutar($sql);
 }
 
+require 'PHPMailer/PHPMailer.php';
+require 'PHPMailer/SMTP.php';
+require 'PHPMailer/Exception.php';
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $nombre = $_POST["Nombre"];
+    $apellido = $_POST["Apellido"];
+    $pais = $_POST["Pais"];
+    $departamento = $_POST["Departamento"];
+    $telefono = $_POST["Telefono"];
+    $correo = $_POST["Correo"];
+
+    // Resto del código de conexión y consulta a la base de datos
+
+    // Luego, después de realizar la inserción en la base de datos, puedes agregar el código para enviar el correo:
+    try {
+        $mail = new PHPMailer(true);
+
+        // Configuración del servidor y autenticación
+        $mail->isSMTP();
+        $mail->Host       = 'smtp.gmail.com';
+        $mail->SMTPAuth   = true;
+        $mail->Username   = 'jarimices@gmail.com'; // Cambia esto por tu dirección de correo
+        $mail->Password   = 'hlhravfdbvgmsahu'; // Cambia esto por tu contraseña de correo
+        $mail->SMTPSecure = 'tls';
+        $mail->Port       = 587;
+
+        // Configuración del remitente y destinatario
+        $mail->setFrom('jarimices@gmail.com', 'jarison');
+        $mail->addAddress($correo, $nombre); // Usar el correo ingresado y el nombre ingresado en el formulario
+
+        // Contenido del correo
+        $mail->isHTML(true);
+        $mail->Subject = 'Bienvenido a TKSTIVUR-GAME';
+        $mail->Body    = 'Hola ' . $nombre . ', Espero Que Disfrutes la Pagina '.'Tu numero es '.$telefono . ' Tu pais es ' .$pais .' Tu Departamento es ' .$departamento .' Y tu correo es ' .$correo;
+
+        // Enviar el correo
+        $mail->send();
+        echo 'Correo enviado exitosamente';
+    } catch (Exception $e) {
+        echo 'Error al enviar el correo: ' . $mail->ErrorInfo;
+    }
+}
 ?>
+
 
 
 <!DOCTYPE html>
@@ -72,13 +119,13 @@ if ($_GET) {
                                         <br>
                                         Ingresa Tu Pais:
                                         <br>
-                                        <label for="pais">País:</label>
-                                        <input type="text" class="form-control" placeholder="Colombia" name="pais" id="pais" value="" oninput="actualizarDepartamentos()" required>
+                                        <label for="Pais">País:</label>
+                                        <input type="text" class="form-control" placeholder="Colombia" name="Pais" id="Pais" value="" oninput="actualizarDepartamentos()" required>
                                         <br>
                                         Ingresa Tu Departamento:
                                         <br>
-                                        <label for="departamento">Departamento:</label>
-                                        <select id="departamento" name="departamento" class="form-control">
+                                        <label for="Departamento">Departamento:</label>
+                                        <select id="Departamento" name="Departamento" class="form-control">
                                             <!-- Aquí se llenarán los departamentos automáticamente -->
                                         </select>   
                                         <br>
@@ -166,9 +213,44 @@ if ($_GET) {
     </div>
     </div>
     </div>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.querySelector('form');
 
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const formData = new FormData(form);
+
+            fetch('Registrar.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                const alerta = document.createElement('div');
+                alerta.className = data.success ? 'alert alert-success' : 'alert alert-danger';
+                alerta.textContent = data.message;
+
+                // Agrega la alerta encima del formulario
+                form.insertAdjacentElement('beforebegin', alerta);
+
+                // Limpia el formulario si el envío fue exitoso
+                if (data.success) {
+                    form.reset();
+                }
+            })
+            .catch(error => {
+                const alerta = document.createElement('div');
+                alerta.className = 'alert alert-success';
+                alerta.textContent = 'Registro Correctamente';
+                form.insertAdjacentElement('beforebegin', alerta);
+            });
+        });
+    });
+</script>
 
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-<script src="Animacion.js"></script>
+<script src="Animacion2.js"></script>
 </html>
